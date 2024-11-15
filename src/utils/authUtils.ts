@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { NextApiResponse } from "next";
-import User from "@/models/user";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 

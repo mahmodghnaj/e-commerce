@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse, NextApiHandler } from "next";
+import { NextApiResponse, NextApiHandler } from "next";
 import { AuthenticatedRequest } from "./authMiddleware";
 
 const isAdminMiddleware =
