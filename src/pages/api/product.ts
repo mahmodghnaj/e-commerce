@@ -26,6 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const products = await Product.find({});
         res.status(200).json({ success: true, data: products });
       } catch (error) {
+        console.log(error);
         res.status(400).json({ success: false });
       }
       break;
@@ -37,7 +38,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           keepExtensions: true,
           uploadDir: "./public/uploads",
           maxFileSize: 10 * 1024 * 1024,
-          filename: (name, ext, path) => `${Date.now()}${ext}`,
+          filename: (name, ext, path) => {
+            console.log(name, path);
+            return `${Date.now()}${ext}`;
+          },
         });
 
         form.parse(req, async (err, fields, files) => {
@@ -117,6 +121,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
         res.status(200).json({ success: true, data: deletedProduct });
       } catch (error) {
+        console.log(error);
         res.status(400).json({ success: false });
       }
       break;

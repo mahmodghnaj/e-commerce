@@ -10,6 +10,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       const products = await Product.find({});
       res.status(200).json({ success: true, data: products });
     } catch (error) {
+      console.log(error);
       res
         .status(400)
         .json({ success: false, error: "An unexpected error occurred" });
