@@ -1,6 +1,8 @@
+import dbConnect from "@/lib/dbConnect";
 import authMiddleware, {
   AuthenticatedRequest,
 } from "@/middlewares/authMiddleware";
+import User from "@/models/user";
 import { NextApiResponse } from "next";
 
 async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
@@ -8,8 +10,14 @@ async function handler(req: AuthenticatedRequest, res: NextApiResponse) {
     if (!req.user) {
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
-
-    res.status(200).json({ success: true, data: req.user });
+    await dbConnect();
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, message: "User not found" });
+    }
+    res.status(200).json({ success: true, data: user });
   } else {
     res.status(405).json({ success: false, message: "Method not allowed" });
   }

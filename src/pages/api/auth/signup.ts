@@ -48,16 +48,22 @@ export default async function handler(
       });
 
       const token = createToken({
-        userId: newUser._id,
+        id: newUser._id,
         email: newUser.email,
         username: newUser.username,
+        isAdmin: newUser.isAdmin,
       });
 
       setTokenCookie(res, token);
 
       res.status(201).json({
         success: true,
-        data: { username: newUser.username, email: newUser.email },
+        data: {
+          id: newUser._id,
+          username: newUser.username,
+          email: newUser.email,
+          isAdmin: newUser.isAdmin,
+        },
       });
     } catch (error) {
       console.error("Error during user registration:", error);

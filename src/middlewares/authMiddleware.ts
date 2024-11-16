@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse, NextApiHandler } from "next";
 import jwt from "jsonwebtoken";
-import User, { IUser } from "@/models/user";
-import dbConnect from "@/lib/dbConnect";
+import { IUser } from "@/models/user";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -17,15 +16,8 @@ const authMiddleware =
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
     try {
-      const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-      await dbConnect();
-      const user = await User.findById(decoded.userId).select("-password");
-      if (!user) {
-        return res
-          .status(401)
-          .json({ success: false, message: "User not found" });
-      }
-      req.user = user.toObject();
+      const decoded = jwt.verify(token, JWT_SECRET) as Omit<IUser, "password">;
+      req.user = decoded;
       return handler(req, res);
     } catch (error) {
       console.error("Error in authMiddleware:", error);

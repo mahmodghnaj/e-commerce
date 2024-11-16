@@ -47,7 +47,7 @@ export default async function handler(
       }
 
       const token = createToken({
-        userId: user._id,
+        id: user._id,
         email: user.email,
         username: user.username,
         isAdmin: user.isAdmin,
@@ -56,6 +56,12 @@ export default async function handler(
 
       res.status(200).json({
         success: true,
+        data: {
+          id: user._id,
+          email: user.email,
+          username: user.username,
+          isAdmin: user.isAdmin,
+        },
         message: "Login successful",
       });
     } catch (error) {

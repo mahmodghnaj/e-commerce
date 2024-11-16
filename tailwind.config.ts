@@ -9,8 +9,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "var(--primary)",
+        "primary-content": "var(--primary-content)",
+        secondary: "var(--secondary)",
+        "secondary-content": "var(--secondary-content)",
+        accent: "var(--accent)",
+        "accent-content": "var(--accent-content)",
+        neutral: "var(--neutral)",
+        "neutral-content": "var(--neutral-content)",
+        "base-100": "var(--base-100)",
+        "base-200": "var(--base-200)",
+        "base-300": "var(--base-300)",
+        "base-content": "var(--base-content)",
       },
     },
   },
