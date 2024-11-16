@@ -3,7 +3,7 @@ import { User } from "@/services/auth/type";
 
 export interface UserSlice {
   userInfo: User | null;
-  setUserInfo: (userInfo: User) => void;
+  setUserInfo: (userInfo: User | null) => void;
 }
 
 interface IProductCard extends IProduct {

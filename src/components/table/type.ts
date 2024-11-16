@@ -43,7 +43,6 @@ export interface BodyProps extends React.ComponentProps<"tbody"> {
 
 export interface BodyLoadingPros extends React.ComponentProps<"tbody"> {
   columns: Column<any>[];
-  limit: number;
 }
 
 export interface HeaderProps extends React.ComponentProps<"thead"> {

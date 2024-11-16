@@ -1,18 +1,26 @@
 import { ReactElement } from "react";
 import { NextPageWithLayout } from "../_app";
-import Main from "@/components/layouts/main";
 import Table from "@/components/table";
 import { Column, TableAction } from "@/services/type";
-import { useProducts } from "@/services/products";
+import { useDeleteProduct, useProducts } from "@/services/products";
 import { IProduct } from "@/models/product";
 import DeleteIcon from "@/components/icons/delete";
 import EditIcon from "@/components/icons/edit";
-import ViewIcon from "@/components/icons/view";
 import { useRouter } from "next/router";
+import Admin from "@/components/layouts/admin";
+import { queryClient } from "@/lib/reactQuery";
 
 const Page: NextPageWithLayout = () => {
   const router = useRouter();
+  const { mutate, isLoading: isLoadingDelete } = useDeleteProduct({
+    onSuccess: () => {
+      queryClient.invalidateQueries(["listProduct"]);
+    },
+  });
 
+  const deleteProduct = (id: string) => {
+    mutate(id);
+  };
   const columns: Column<IProduct>[] = [
     {
       name: "name",
@@ -34,18 +42,20 @@ const Page: NextPageWithLayout = () => {
     {
       name: "delete",
       icon: <DeleteIcon />,
-      handler: () => {},
+      handler: (col) => deleteProduct(col._id as string),
     },
     {
       name: "edit",
       icon: <EditIcon />,
-      handler: () => {},
+      handler: (col) => {
+        router.push(`/admin/product/${col._id}`);
+      },
     },
   ];
   return (
     <>
-      <div className="flex items-center justify-center bg-base-100  w-full h-full flex-col">
-        <div className="mx-10  mt-10 overflow-hidden">
+      <div className="flex items-center justify-center bg-base-100  w-full h-full flex-col ">
+        <div className="mx-10  mt-10 ">
           <div className="mb-3">
             <div className="flex w-full justify-between">
               <h1 className="text-4xl mb-2 text-center font-bold">
@@ -54,19 +64,14 @@ const Page: NextPageWithLayout = () => {
               <div>
                 <button
                   className="btn btn-primary btn-md"
-                  onClick={() => router.push("/admin/add-product")}
+                  onClick={() => router.push("/admin/product/add")}
                 >
                   Add New Product
                 </button>
               </div>
             </div>
           </div>
-          <Table
-            className="min-h-4/6"
-            columns={columns}
-            fetchQuery={useProducts}
-            actions={actions}
-          />
+          <Table columns={columns} fetchQuery={useProducts} actions={actions} />
         </div>
       </div>
     </>
@@ -74,6 +79,6 @@ const Page: NextPageWithLayout = () => {
 };
 
 Page.getLayout = (page: ReactElement) => {
-  return <Main>{page}</Main>;
+  return <Admin>{page}</Admin>;
 };
 export default Page;

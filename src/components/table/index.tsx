@@ -26,7 +26,6 @@ const Table = ({
   className = "",
   showFooter,
   actions,
-  onUpdateRow,
 }: ComponentProps & { onUpdateRow?: (updatedData: any[]) => void }) => {
   const [params, setParams] = useState<IBaseParams>(baseParams);
   const [data, setData] = useState<any[]>([]);
@@ -80,9 +79,7 @@ const Table = ({
       <div className={tableClasses}>
         <table className={tableInnerClasses}>
           <Header actions={actions} columns={columns} />
-          {isLoading && !data && (
-            <BodyLoading columns={columns} limit={params.limit} />
-          )}
+          {isLoading && <BodyLoading columns={columns} />}
           {!isLoading && data && (
             <Body
               actions={actions}

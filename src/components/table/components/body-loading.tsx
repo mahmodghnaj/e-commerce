@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { BodyLoadingPros } from "../type";
 
-const BodyLoading: FC<BodyLoadingPros> = ({ columns, limit }) => {
+const BodyLoading: FC<BodyLoadingPros> = ({ columns }) => {
   const generateRows = () => {
     const rows = [];
 
-    for (let i = 0; i < limit; i++) {
+    for (let i = 0; i < 4; i++) {
       rows.push(
         <tr key={i}>
           {columns.map((column) => (

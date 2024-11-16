@@ -1,5 +1,5 @@
 import ToggleTheme from "@/components/icons/toggleTheme";
-import { useLogout, useMe } from "@/services/auth";
+import { useLogout } from "@/services/auth";
 import useStore from "@/store";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useMemo } from "react";
@@ -9,17 +9,10 @@ type ComponentProps = {
   children: ReactElement;
 };
 
-const Main = ({ children }: ComponentProps) => {
-  const { setUserInfo, userInfo } = useStore();
-  const { data } = useMe({
-    enabled: !userInfo,
-    onSuccess: (user) => {
-      setUserInfo(user);
-    },
-  });
-  const isLogin = useMemo(() => Boolean(data || userInfo), [data, userInfo]);
+const Admin = ({ children }: ComponentProps) => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const router = useRouter();
+  const { setUserInfo } = useStore();
 
   const switchTheme = () => {
     const newTheme = !isDarkTheme ? "dark" : "light";
@@ -43,52 +36,20 @@ const Main = ({ children }: ComponentProps) => {
       <nav className="backdrop-blur-lg bg-white/30 border-b border-white/10 shadow-md fixed w-full z-50">
         <div className="container mx-auto flex items-center justify-between px-6 py-4">
           <div
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/admin")}
             className="cursor-pointer select-none text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
           >
-            E-Commerce
+            Dashboard
           </div>
 
           <div className="flex space-x-4 items-center">
-            {isLogin ? (
-              <>
-                <button
-                  onClick={() =>
-                    router.pathname === "/cart"
-                      ? router.push("/")
-                      : router.push("/cart")
-                  }
-                  className="px-2 py-1 border-2 border-primary rounded-md hover:text-secondary"
-                >
-                  <span className="font-bold text-lg">
-                    {router.pathname === "/cart" ? "Market" : "My Cart"}
-                  </span>
-                </button>
-                <button
-                  onClick={() => logout()}
-                  type="button"
-                  className="flex items-center justify-center border-[3px] rounded-lg text-sm p-2 transition-all duration-300 dark:text-gray-300 dark:border-gray-300 text-gray-800 border-gray-500 hover:scale-105"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={() => router.push("/auth/login")}
-                  className="px-5 py-2 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg shadow-md transition hover:opacity-90"
-                >
-                  Login
-                </button>
-                <button
-                  onClick={() => router.push("/auth/register")}
-                  className="px-5 py-2 text-sm font-medium text-white bg-gradient-to-r from-pink-500 to-orange-500 rounded-lg shadow-md transition hover:opacity-90"
-                >
-                  Signup
-                </button>
-              </>
-            )}
-
+            <button
+              onClick={() => logout()}
+              type="button"
+              className="flex items-center justify-center border-[3px] rounded-lg text-sm p-3 transition-all duration-300 dark:text-gray-300 dark:border-gray-300 text-gray-800 border-gray-500 hover:scale-105"
+            >
+              Logout
+            </button>
             <button
               onClick={() => switchTheme()}
               type="button"
@@ -114,4 +75,4 @@ const Main = ({ children }: ComponentProps) => {
   );
 };
 
-export default Main;
+export default Admin;

@@ -2,45 +2,51 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { object, string, number } from "zod";
 import { useEffect, useState } from "react";
+import { IProduct } from "@/models/product";
 
-interface Product {
+export interface Product {
   name: string;
   price: number;
   description: string;
-  image: string;
+  image?: File;
 }
 
 interface EditorProductProps {
-  product?: Product;
+  product?: IProduct;
   onSubmit: (data: Product) => void;
+  isLoading: boolean;
 }
 
 const productSchema = object({
   name: string().min(1, "Name is required"),
   price: number().positive("Price must be a positive number"),
   description: string().min(1, "Description is required"),
-  image: string().min(1, "Image is required"),
 });
 
-const EditorProduct = ({ product, onSubmit }: EditorProductProps) => {
+const EditorProduct = ({
+  product,
+  onSubmit,
+  isLoading,
+}: EditorProductProps) => {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<Product>({
+  } = useForm<Omit<Product, "image">>({
     resolver: zodResolver(productSchema),
     defaultValues: product,
   });
 
   const [fileName, setFileName] = useState<string>("No file chosen");
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (product) {
       setValue("name", product.name);
       setValue("price", product.price);
       setValue("description", product.description);
-      setValue("image", product.image);
+      setFileName(product.imageUrl ? "Existing Image" : "No file chosen");
     }
   }, [product, setValue]);
 
@@ -51,19 +57,16 @@ const EditorProduct = ({ product, onSubmit }: EditorProductProps) => {
         alert("Image size must not exceed 3 MB");
         return;
       }
-      setFileName(file.name);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setValue("image", reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setFile(file); // Store the file
+      setFileName(file.name); // Update the file name
     } else {
       setFileName("No file chosen");
+      setFile(null);
     }
   };
 
-  const onSubmitHandler: SubmitHandler<Product> = (data) => {
-    onSubmit(data);
+  const onSubmitHandler: SubmitHandler<Omit<Product, "image">> = (data) => {
+    onSubmit({ ...data, image: file ? file : undefined });
   };
 
   return (
@@ -132,13 +135,11 @@ const EditorProduct = ({ product, onSubmit }: EditorProductProps) => {
             />
             <span className="text-sm text-gray-500">{fileName}</span>
           </div>
-          <p className="mt-1 text-red-300 font-semibold text-sm">
-            {errors.image?.message}
-          </p>
         </div>
       </div>
 
       <button type="submit" className="mt-6 btn btn-primary w-full">
+        {isLoading && <span className="loading loading-spinner"></span>}
         {product ? "Update Product" : "Create Product"}
       </button>
     </form>

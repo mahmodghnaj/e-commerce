@@ -26,7 +26,13 @@ export const useRegister = (
   useMutation<User, unknown, RegisterBody>(
     ["register"],
     async (body) => {
-      const { data } = await api.post("/api/auth/signup", body);
+      const { data } = await api.post("/api/auth/signup", {
+        ...body,
+        username: body.firstName + " " + body.lastName,
+        firstName: undefined,
+        lastName: undefined,
+        confirmPassword: undefined,
+      });
       return data.data;
     },
     options
@@ -38,6 +44,16 @@ export const useMe = (options?: UseQueryOptions<User>) =>
     async () => {
       const { data } = await api.get("/api/auth/me");
       return data.data;
+    },
+    options
+  );
+
+export const useLogout = (options?: UseMutationOptions) =>
+  useMutation(
+    ["logout"],
+    async () => {
+      const { data } = await api.post("/api/auth/logout");
+      return data;
     },
     options
   );

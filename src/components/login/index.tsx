@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { LoginBody } from "@/services/auth/type";
 import { useLogin } from "@/services/auth";
 import useStore from "@/store";
+import { useState } from "react";
 
 const signInSchema = object({
   email: string().min(1, "Required").email("Invalid Email"),
@@ -16,6 +17,7 @@ const signInSchema = object({
 const Login = () => {
   const router = useRouter();
   const { setUserInfo } = useStore();
+  const [generalError, setGeneralError] = useState("");
 
   const {
     register,
@@ -29,10 +31,18 @@ const Login = () => {
       setUserInfo(user);
       router.push("/");
     },
+    onError: (error) => {
+      if (error) {
+        setGeneralError("Email or Password is Incorrect");
+      } else {
+        setGeneralError("Something went wrong. Please try again.");
+      }
+    },
   });
 
   const onSubmitHandler: SubmitHandler<LoginBody> = (values) => {
     if (isLoading) return;
+    setGeneralError("");
     login(values);
   };
   return (
@@ -42,6 +52,11 @@ const Login = () => {
         onSubmit={handleSubmit(onSubmitHandler)}
       >
         <h1 className="text-center text-3xl font-mono">Login </h1>
+        {generalError && (
+          <p className="mt-3 text-red-500 font-semibold text-center">
+            {generalError}
+          </p>
+        )}
         <div className="mt-5 space-y-3 ">
           <p className="text-sm font-extralight ">Enter your Email address</p>
           <div>
@@ -64,7 +79,7 @@ const Login = () => {
               className="input input-primary w-full input-md"
             />
             <div className="mt-1 flex justify-between font-semibold text-sm">
-              <p className="text-error "> {errors.password?.message}</p>
+              <p className="text-red-300 "> {errors.password?.message}</p>
             </div>
           </div>
         </div>
