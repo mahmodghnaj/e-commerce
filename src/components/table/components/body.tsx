@@ -3,11 +3,11 @@ import { BodyProps } from "../type";
 import { Column } from "@/services/type";
 
 const Body: FC<BodyProps> = ({ data, columns, actions, showFooter }) => {
-  const renderCellContent = (column: Column<any>, row: any) => {
+  const renderCellContent = (column: Column<unknown>, row: unknown) => {
     return <>{column.filed(row)}</>;
   };
 
-  const renderCell = (column: Column<any>, row: any, index: number) => {
+  const renderCell = (column: Column<unknown>, row: unknown, index: number) => {
     const style =
       column.styled && typeof column.styled === "function"
         ? column.styled(row)
@@ -28,7 +28,7 @@ const Body: FC<BodyProps> = ({ data, columns, actions, showFooter }) => {
     );
   };
 
-  const renderRow = (row: any, rowIndex: number) => (
+  const renderRow = (row: unknown, rowIndex: number) => (
     <tr key={rowIndex} className="hover">
       {columns.map((column, columnIndex) =>
         renderCell(column, row, columnIndex)

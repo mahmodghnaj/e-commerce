@@ -22,7 +22,7 @@ const signUpSchema = object({
 });
 export type signUpInput = TypeOf<typeof signUpSchema>;
 
-const signUp = () => {
+const SignUp = () => {
   const router = useRouter();
   const { setUserInfo } = useStore();
   const [generalError, setGeneralError] = useState("");
@@ -156,4 +156,4 @@ const signUp = () => {
   );
 };
 
-export default signUp;
+export default SignUp;

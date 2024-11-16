@@ -13,6 +13,7 @@ export const isAuthenticated = async (request: NextRequest) => {
     );
     return decoded;
   } catch (error) {
+    console.log(error);
     return false;
   }
 };

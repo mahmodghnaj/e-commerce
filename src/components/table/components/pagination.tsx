@@ -16,9 +16,13 @@ const Pagination: FC<PaginationProps> = ({
     });
   };
 
-  const addEllipsis = (key: string, onClick: any) => {
+  const addEllipsis = (key: string, onClick: unknown) => {
     buttons.push(
-      <span key={key} className="join-item btn btn-square" onClick={onClick}>
+      <span
+        key={key}
+        className="join-item btn btn-square"
+        onClick={() => onClick}
+      >
         ...
       </span>
     );

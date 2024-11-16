@@ -2,7 +2,7 @@ import ToggleTheme from "@/components/icons/toggleTheme";
 import { useLogout } from "@/services/auth";
 import useStore from "@/store";
 import { useRouter } from "next/router";
-import { ReactElement, useEffect, useMemo } from "react";
+import { ReactElement, useEffect } from "react";
 import { useState } from "react";
 
 type ComponentProps = {

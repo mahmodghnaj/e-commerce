@@ -26,9 +26,9 @@ const Table = ({
   className = "",
   showFooter,
   actions,
-}: ComponentProps & { onUpdateRow?: (updatedData: any[]) => void }) => {
+}: ComponentProps & { onUpdateRow?: (updatedData: unknown[]) => void }) => {
   const [params, setParams] = useState<IBaseParams>(baseParams);
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<unknown[]>([]);
   const [total, setTotal] = useState<number | undefined>(undefined);
   const [totalPages, setTotalPages] = useState<number | undefined>(undefined);
 

@@ -12,7 +12,7 @@ import { queryClient } from "@/lib/reactQuery";
 
 const Page: NextPageWithLayout = () => {
   const router = useRouter();
-  const { mutate, isLoading: isLoadingDelete } = useDeleteProduct({
+  const { mutate } = useDeleteProduct({
     onSuccess: () => {
       queryClient.invalidateQueries(["listProduct"]);
     },

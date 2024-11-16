@@ -1,12 +1,12 @@
 import { create } from "zustand";
 import { CartSlice, UserSlice } from "./type";
 
-const createUserSlice = (set: any): UserSlice => ({
+const createUserSlice = (set: unknown): UserSlice => ({
   userInfo: null,
-  setUserInfo: (userInfo) => set((state: UserSlice) => ({ userInfo })),
+  setUserInfo: (userInfo) => set(() => ({ userInfo })),
 });
 
-const createCartSlice = (set: any): CartSlice => ({
+const createCartSlice = (set: unknown): CartSlice => ({
   cart: [],
 
   addToCart: (product) =>
@@ -30,7 +30,7 @@ const createCartSlice = (set: any): CartSlice => ({
     })),
 });
 
-const useStore = create((set: any) => ({
+const useStore = create((set: unknown) => ({
   ...createUserSlice(set),
   ...createCartSlice(set),
 }));

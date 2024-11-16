@@ -2,14 +2,14 @@ import { UseQueryResult } from "react-query";
 import PropTypes from "prop-types";
 import { Column, IPaginationOptions, TableAction } from "@/services/type";
 
-export const propTypesColumn: any = PropTypes.array.isRequired;
-export const propTypesFetchQuery: any = PropTypes.func.isRequired;
-export const propTypesSyncRoute: any = PropTypes.bool;
-export const propTypesFilter: any = PropTypes.object;
-export const propTypesClassName: any = PropTypes.string;
-export const propTypesShowFooter: any = PropTypes.bool;
-export const propTypesStickyActions: any = PropTypes.bool;
-export const propTypesAction: any = PropTypes.array;
+export const propTypesColumn: unknown = PropTypes.array.isRequired;
+export const propTypesFetchQuery: unknown = PropTypes.func.isRequired;
+export const propTypesSyncRoute: unknown = PropTypes.bool;
+export const propTypesFilter: unknown = PropTypes.object;
+export const propTypesClassName: unknown = PropTypes.string;
+export const propTypesShowFooter: unknown = PropTypes.bool;
+export const propTypesStickyActions: unknown = PropTypes.bool;
+export const propTypesAction: unknown = PropTypes.array;
 
 export interface MyComponentMethods {
   updateRow: <T>(callback: (value: T) => boolean, object: Partial<T>) => void;
@@ -35,30 +35,30 @@ export interface FooterProps extends React.ComponentProps<"div"> {
 }
 
 export interface BodyProps extends React.ComponentProps<"tbody"> {
-  data: any[];
-  columns: Column<any>[];
-  actions: TableAction<any>[] | undefined;
+  data: unknown[];
+  columns: Column<unknown>[];
+  actions: TableAction<unknown>[] | undefined;
   showFooter: boolean | undefined;
 }
 
 export interface BodyLoadingPros extends React.ComponentProps<"tbody"> {
-  columns: Column<any>[];
+  columns: Column<unknown>[];
 }
 
 export interface HeaderProps extends React.ComponentProps<"thead"> {
-  columns: Column<any>[];
-  actions: TableAction<any>[] | undefined;
+  columns: Column<unknown>[];
+  actions: TableAction<unknown>[] | undefined;
 }
 
 export interface ComponentProps extends React.ComponentProps<"table"> {
-  columns: Column<any>[];
+  columns: Column<unknown>[];
   fetchQuery: (
     params: IPaginationOptions
-  ) => UseQueryResult<QueryDataResponseType<any>, any>;
+  ) => UseQueryResult<QueryDataResponseType<unknown>, unknown>;
   syncRoute?: boolean;
   filter?: object;
   className?: string;
   showFooter?: boolean;
   stickyActions?: boolean;
-  actions?: TableAction<any>[];
+  actions?: TableAction<unknown>[];
 }

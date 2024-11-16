@@ -10,7 +10,7 @@ const publicPath = ["/"];
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   if (!regexPattern.test(pathname)) return NextResponse.next();
-  const isAuth = (await isAuthenticated(request)) as { payload: any };
+  const isAuth = (await isAuthenticated(request)) as { payload: unknown };
   const isAdmin = isAuth && isAuth.payload && isAuth.payload.isAdmin;
   if (pathname.startsWith("/admin") && isAdmin) {
     return NextResponse.next();
