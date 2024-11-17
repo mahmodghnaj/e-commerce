@@ -2,7 +2,7 @@ import { api } from "@/lib/axios";
 import { IProduct } from "@/models/product";
 import { UseQueryOptions, useQuery } from "react-query";
 
-export const useMarket = (options?: UseQueryOptions<any>) =>
+export const useMarket = (options?: UseQueryOptions) =>
   useQuery<IProduct[]>(
     ["market"],
     async () => {

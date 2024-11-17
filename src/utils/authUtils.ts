@@ -25,7 +25,7 @@ export const comparePassword = async (
 };
 
 export const createToken = (payload: object): string => {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: "15m" });
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: "1h" });
 };
 
 export const setTokenCookie = (res: NextApiResponse, token: string): void => {
