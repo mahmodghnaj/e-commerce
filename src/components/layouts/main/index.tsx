@@ -33,8 +33,7 @@ const Main = ({ children }: ComponentProps) => {
   }, []);
   const { mutate: logout } = useLogout({
     onSuccess: () => {
-      router.push("/");
-      setUserInfo(null);
+      location.reload();
     },
   });
 

@@ -3,9 +3,13 @@ import { useMarket } from "@/services/market";
 import { NextPageWithLayout } from "./_app";
 import { ReactElement } from "react";
 import Main from "@/components/layouts/main";
+import { IProduct } from "@/models/product";
 
 const Home: NextPageWithLayout = () => {
-  const { data: products, isLoading } = useMarket();
+  const { data: products, isLoading } = useMarket({
+    select: (data) =>
+      data.map((product: IProduct) => ({ ...product, id: product._id })),
+  });
 
   if (isLoading) {
     return (

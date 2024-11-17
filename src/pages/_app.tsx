@@ -5,7 +5,7 @@ import "@/styles/globals.css";
 import { QueryClientProvider } from "react-query";
 import { queryClient } from "@/lib/reactQuery";
 
-export type NextPageWithLayout<P, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
