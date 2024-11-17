@@ -23,7 +23,7 @@ npm run dev
 - Ensure you rename the example.env.local file to .env.local before starting the server, as it contains the environment variables required for the application to run properly.
 
 - Make sure to rename example.env.local to .env.local before starting the server, as it contains the environment variables required for the application to run properly.
-  To add products, you can log in with the following credentials:
+- To add products, you can log in with the following credentials:
 
       Email: admin@admin.com
       Password: 123123123
