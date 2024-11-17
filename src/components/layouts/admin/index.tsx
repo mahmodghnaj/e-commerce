@@ -1,6 +1,5 @@
 import ToggleTheme from "@/components/icons/toggleTheme";
 import { useLogout } from "@/services/auth";
-import useStore from "@/store";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect } from "react";
 import { useState } from "react";
@@ -12,7 +11,6 @@ type ComponentProps = {
 const Admin = ({ children }: ComponentProps) => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const router = useRouter();
-  const { setUserInfo } = useStore();
 
   const switchTheme = () => {
     const newTheme = !isDarkTheme ? "dark" : "light";
